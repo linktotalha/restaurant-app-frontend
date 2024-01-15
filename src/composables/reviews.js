@@ -36,9 +36,9 @@ export const useReviewApi = () => {
         },
       });
       errors.value = null;
-    //   await getReviews({
-    //     feedback_id: data.feedback_id,
-    //   });
+      await getReviews({
+        dish_id: data.dish_id,
+      });
       toast(response.data.message);
       return response.data;
     } catch (e) {

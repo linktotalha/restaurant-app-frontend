@@ -12,7 +12,7 @@ const route = useRoute();
 const userStore = useUserStore();
 const user = ref([]);
 const { dishes, showDish } = useDishApi();
-const { addReview } = useReviewApi();
+const { reviews, addReview, getReviews } = useReviewApi();
 
 const form = ref({
     rating: '',
@@ -49,6 +49,9 @@ onMounted(async () => {
     <div class="row p-5">
         <div class="col-12 text-center mb-3">
             <h4>Reviews</h4>
+        </div>
+        <div class="col-6">
+        
         </div>
         <div class="col-6">
             <form @submit.prevent="submit">

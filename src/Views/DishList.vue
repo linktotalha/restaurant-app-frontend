@@ -62,7 +62,7 @@ onMounted(async () => {
                         <td>
                             <RouterLink class="btn btn-sm btn-success"
                                 :to="{ name: 'dish-detail', params: { id: dish?.id } }">View</RouterLink>
-                            <button class="btn btn-sm btn-danger ms-2" @click="deleteDish(dish?.id)">Delete</button>
+                            <button v-if="userStore.user.id === dish.user_id" class="btn btn-sm btn-danger ms-2" @click="deleteDish(dish?.id)">Delete</button>
                         </td>
                     </tr>
 
