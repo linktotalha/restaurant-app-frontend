@@ -50,10 +50,10 @@ onMounted(async () => {
 <template>
     <div class="row p-5">
         <div class="col-12 text-center">
-            <h3>Feedback List</h3>
+            <h3>Dish List</h3>
         </div>
         <div class="col-12">
-            <RouterLink :to="{ name: 'dish' }" class="btn btn-primary mb-3" v-if="userStore?.user">+Add Feedback
+            <RouterLink :to="{ name: 'dish' }" class="btn btn-primary mb-3" v-if="userStore?.user">+Add Dish
             </RouterLink>
         </div>
         <div class="col-6">
