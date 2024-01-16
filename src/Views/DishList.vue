@@ -8,13 +8,24 @@ const { dishes, getDish, destroyDish } = useDishApi();
 const userStore = useUserStore();
 const limit = ref(5);
 const currentPage = ref(1);
+const timer = ref(null);
+const keyword = ref('');
 
 const dishItems = async (page = 1) => {
     let params = {
         per_page: limit.value,
-        page: page
+        page: page,
+        keyword: keyword.value,
     };
     await getDish(params);
+}
+
+const searchDish = (event) => {
+    keyword.value = event.target.value;
+    clearTimeout(timer.value);
+    timer.value = setTimeout(() => {
+        dishItems();
+    }, 500);
 }
 
 const previousPage = async () => {
@@ -29,6 +40,7 @@ const nextPage = async () => {
 
 const deleteDish = async(id) => {
     await destroyDish(id);
+    await getDish();
 }
 
 onMounted(async () => {
@@ -45,6 +57,7 @@ onMounted(async () => {
             </RouterLink>
         </div>
         <div class="col-6">
+            <input type="text" placeholder="search here...." class="form-class" @keyup="searchDish"/>
             <table class="table">
                 <thead>
                     <tr>

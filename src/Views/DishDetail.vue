@@ -21,12 +21,19 @@ const form = ref({
 });
 
 const submit = async() => {
-    await addReview(form.value)
+    const response = await addReview(form.value)
+    response && await getReviews(route.params.id);
+    response && (form.value = {
+        rating: '',
+        review: '',
+    })
 }
 onMounted(async () => {
     user.value = userStore.getUser;
     form.value.user_id = user.value ? user.value.id : null;
     await showDish(route.params.id);
+
+    await getReviews(route.params.id);
 });
 </script>
 <template>
@@ -50,8 +57,22 @@ onMounted(async () => {
         <div class="col-12 text-center mb-3">
             <h4>Reviews</h4>
         </div>
-        <div class="col-6">
-        
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <div class="card mb-3" v-if="reviews?.reviews && reviews?.reviews?.data.length > 0" v-for="review in reviews.reviews.data">
+                    <div class="card-body">
+                        <h5>{{ review?.user?.name }}</h5>
+                        <p>
+                            <star-rating star-size="20" v-model:rating="review.rating" :show-rating="false"
+                                    :read-only="true" active-color="#ff6846"></star-rating>
+                        </p>
+                        <p>{{ review?.review }}</p>
+                    </div>
+                </div>
+                <div v-else>
+                    <h5>No record found</h5>
+                </div>
+            </div>
         </div>
         <div class="col-6">
             <form @submit.prevent="submit">
